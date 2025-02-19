@@ -3,8 +3,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Crypto categories
-crypto_signs = ["dilithium2", "dilithium3", "dilithium5"]
+# crypto_signs = ["dilithium2", "dilithium3", "dilithium5"]
+# crypto_signs = ["falcon512tree", "falcon512dyn", "falcon1024tree", "falcon1024dyn"]
+crypto_signs = ["sphincsf128harakarobust", "sphincsf192harakarobust", "sphincsf256harakarobust", "sphincsf128harakasimple", "sphincsf192harakasimple", "sphincsf256harakasimple"]
+# crypto_signs = ["sphincsf128shake256robust", "sphincsf128shake256simple", "sphincsf192shake256robust", "sphincsf192shake256simple", "sphincsf256shake256robust", "sphincsf256shake256simple"]
 
+# Byte sizes list
+byte_sizes = [
+    567,
+    709, 887, 1109, 1387,
+    1734, 2232, 2711, 3389,
+    4237, 5297, 6622, 8278,
+    10348, 12936, 16171, 20214,
+    25268, 31650, 39483, 49354,
+    61693, 77117, 96397
+]
+
+'''
 # Byte sizes list
 byte_sizes = [
     0, 1, 2, 3, 4,
@@ -20,9 +35,10 @@ byte_sizes = [
     25268, 31650, 39483, 49354,
     61693, 77117, 96397
 ]
+'''
 
 # Define substring to filter lines
-SIGN_CYCLES_SUBSTRING = "/constbranchindex cycles "
+SIGN_CYCLES_SUBSTRING = "/timingleaks cycles "
 
 # Generate regex pattern to match {sign} + {SIGN_CYCLES_SUBSTRING} + {size}
 substrings_to_check = [f"{sign}{SIGN_CYCLES_SUBSTRING}{size}" for sign in crypto_signs for size in byte_sizes]
@@ -72,9 +88,6 @@ def extract_info(df):
     })
 
     return df_grouped
-
-
-    return df_filtered
 
 # Function to remove outliers using the IQR method
 def remove_outliers(arr):
@@ -128,5 +141,5 @@ def plot_medians(df):
     # Show plot
     plt.show()
 
-# Example usage:
+
 plot_medians(df_medians)

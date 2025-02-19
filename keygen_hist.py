@@ -10,7 +10,8 @@ input_filename = 'data'  # SUPERCOP Data
 
 # Crypto categories
 crypto_signs = [""]
-crypto_signs2 = ["falcon1024tree", "falcon1024dyn", "falcon512tree","falcon512dyn"]
+crypto_signs2 = ["sphincsf128harakarobust", "sphincsf192harakarobust", "sphincsf256harakarobust", "sphincsf128harakasimple", "sphincsf192harakasimple", "sphincsf256harakasimple"]
+
 
 # Generate substrings for filtering
 subs = [sign + KEYPAIR_CYCLES_SUBSTRING for sign in crypto_signs]
@@ -71,12 +72,12 @@ median_values.columns = ["crypto_sign", "median_value"]
 
 # Plot histogram
 plt.figure(figsize=(8, 5))
-plt.bar(median_values["crypto_sign"], median_values["median_value"], color=["blue", "green", "red"])
+plt.bar(median_values["crypto_sign"], median_values["median_value"], color=["blue", "green", "red", "orange", "brown", "purple"])
 
 # Labels and title
 plt.xlabel("Falcon Algorithm")
 plt.ylabel("Key Generation (CPU Cycles)")
-plt.title("Median Key Generation Time of Falcon")
+plt.title("Median Key Generation Time of Sphincs (Haraka)")
 plt.xticks(rotation=20)
 plt.grid(axis="y", linestyle="--", alpha=0.7)
 

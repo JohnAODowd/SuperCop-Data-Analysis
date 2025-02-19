@@ -3,7 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Crypto categories
-crypto_signs = ["dilithium2", "dilithium3", "dilithium5"]
+# crypto_signs = ["dilithium2", "dilithium3", "dilithium5"]
+# crypto_signs = ["falcon512tree", "falcon512dyn", "falcon1024tree", "falcon1024dyn"]
+# crypto_signs = ["sphincsf128harakarobust", "sphincsf192harakarobust", "sphincsf256harakarobust", "sphincsf128harakasimple", "sphincsf192harakasimple", "sphincsf256harakasimple"]
+# crypto_signs = ["sphincsf128shake256robust", "sphincsf128shake256simple", "sphincsf192shake256robust", "sphincsf192shake256simple", "sphincsf256shake256robust", "sphincsf256shake256simple"]
 
 byte_sizes = [
 567,
@@ -34,7 +37,7 @@ byte_sizes = [
 '''
 
 # Define substring to filter lines
-SIGN_CYCLES_SUBSTRING = "/constbranchindex open_cycles "
+SIGN_CYCLES_SUBSTRING = "/timingleaks open_cycles "
 
 # Generate regex pattern to match {sign} + {SIGN_CYCLES_SUBSTRING} + {size}
 substrings_to_check = [f"{sign}{SIGN_CYCLES_SUBSTRING}{size}" for sign in crypto_signs for size in byte_sizes]
