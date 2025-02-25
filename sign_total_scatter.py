@@ -5,12 +5,28 @@ import matplotlib.pyplot as plt
 # Crypto categories
 # crypto_signs = ["dilithium2", "dilithium3", "dilithium5"]
 # crypto_signs = ["falcon512tree", "falcon512dyn", "falcon1024tree", "falcon1024dyn"]
-crypto_signs = ["sphincsf128harakarobust", "sphincsf192harakarobust", "sphincsf256harakarobust", "sphincsf128harakasimple", "sphincsf192harakasimple", "sphincsf256harakasimple"]
+# crypto_signs = ["sphincsf128harakarobust", "sphincsf192harakarobust", "sphincsf256harakarobust", "sphincsf128harakasimple", "sphincsf192harakasimple", "sphincsf256harakasimple"]
 # crypto_signs = ["sphincsf128shake256robust", "sphincsf128shake256simple", "sphincsf192shake256robust", "sphincsf192shake256simple", "sphincsf256shake256robust", "sphincsf256shake256simple"]
+
+# NIST Level 1
+# crypto_signs = [""]
+# crypto_signs2 = ["falcon512tree", "falcon512dyn", "sphincsf128harakarobust", "sphincsf128shake256robust", "sphincsf128shake256simple",  "sphincsf128harakasimple"]
+
+# NIST Level 2
+# crypto_signs = ["dilithium2"]
+# crypto_signs2 = [""]
+
+# NIST Level 3
+# crypto_signs = ["dilithium3"]
+# crypto_signs2 = ["sphincsf192harakarobust", "sphincsf192shake256robust", "sphincsf192shake256simple",  "sphincsf192harakasimple"]
+
+# NIST Level 5
+crypto_signs = ["dilithium5"]
+crypto_signs2 = ["falcon1024tree", "falcon1024dyn", "sphincsf256harakarobust", "sphincsf256shake256robust", "sphincsf256shake256simple",  "sphincsf256harakasimple"]
 
 # Byte sizes list
 byte_sizes = [
-    567,
+567,
     709, 887, 1109, 1387,
     1734, 2232, 2711, 3389,
     4237, 5297, 6622, 8278,
@@ -38,10 +54,13 @@ byte_sizes = [
 '''
 
 # Define substring to filter lines
-SIGN_CYCLES_SUBSTRING = "/timingleaks cycles "
+SIGN_CYCLES_SUBSTRING = "/constbranchindex cycles "
+SIGN_CYCLES_SUBSTRING2 = "/timingleaks cycles "
 
 # Generate regex pattern to match {sign} + {SIGN_CYCLES_SUBSTRING} + {size}
 substrings_to_check = [f"{sign}{SIGN_CYCLES_SUBSTRING}{size}" for sign in crypto_signs for size in byte_sizes]
+substrings_to_check += [f"{sign}{SIGN_CYCLES_SUBSTRING2}{size}" for sign in crypto_signs2 for size in byte_sizes]
+
 
 # Function to filter lines containing specific substrings
 def filter_lines(input_file, substrings):
@@ -59,7 +78,7 @@ def extract_info(df):
         parts = line.split()
         
         # Find the crypto sign in the line
-        crypto_sign = next((crypto for crypto in crypto_signs if crypto in line), None)
+        crypto_sign = next((crypto for crypto in (crypto_signs + crypto_signs2) if crypto in line), None)
         if not crypto_sign:
             return pd.Series([None, None, np.array([])])
 
