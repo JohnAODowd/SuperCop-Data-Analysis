@@ -71,6 +71,7 @@ def filter_lines(input_file, substrings):
 
     # Apply regex filter
     mask = df["line"].str.contains(pattern, na=False, regex=True)
+
     return df[mask]
 
 def extract_info(df):
@@ -126,6 +127,7 @@ def calc_medians(df):
     # Select relevant columns for the output DataFrame
     return df[["crypto_sign", "byte_sizes", "median"]]
 
+
 # Read and filter lines from file
 input_filename = "data"
 df_filtered = filter_lines(input_filename, substrings_to_check)
@@ -138,6 +140,14 @@ df_filtered['numbers'] = df_filtered['numbers'].apply(remove_outliers)
 
 # Calculate the median value for all measurements
 df_medians = calc_medians(df_filtered)
+
+def summarize_medians(df):
+    summary_df = df.groupby('crypto_sign')['median'].median().reset_index()
+    summary_df.rename(columns={'median': 'overall_median'}, inplace=True)
+    return summary_df
+
+print(summarize_medians(df_medians))
+
 
 def plot_medians(df):
 
@@ -160,5 +170,3 @@ def plot_medians(df):
     # Show plot
     plt.show()
 
-
-plot_medians(df_medians)

@@ -9,30 +9,32 @@ KEYPAIR_CYCLES_SUBSTRING2 = "/timingleaks keypair_cycles"
 input_filename = 'data'  # SUPERCOP Data
 
 # Crypto categories
-# crypto_signs = ["dilithium3"]
-# crypto_signs2 = ["sphincsf128harakarobust", "sphincsf192harakarobust", "sphincsf256harakarobust", "sphincsf128harakasimple", "sphincsf192harakasimple", "sphincsf256harakasimple"]
+# crypto_signs = ["dilithium2", "dilithium3", "dilithium5"]
+# crypto_signs = ["falcon512tree", "falcon512dyn", "falcon1024tree", "falcon1024dyn"]
+# crypto_signs = ["sphincsf128harakarobust", "sphincsf192harakarobust", "sphincsf256harakarobust", "sphincsf128harakasimple", "sphincsf192harakasimple", "sphincsf256harakasimple"]
+# crypto_signs = ["sphincsf128shake256robust", "sphincsf128shake256simple", "sphincsf192shake256robust", "sphincsf192shake256simple", "sphincsf256shake256robust", "sphincsf256shake256simple"]
 
 # NIST Level 1
+# crypto_signs = [""]
 # crypto_signs2 = ["falcon512tree", "falcon512dyn", "sphincsf128harakarobust", "sphincsf128shake256robust", "sphincsf128shake256simple",  "sphincsf128harakasimple"]
 
 # NIST Level 2
 # crypto_signs = ["dilithium2"]
+# crypto_signs2 = [""]
 
 # NIST Level 3
-crypto_signs = ["dilithium3"]
-crypto_signs2 = ["sphincsf192harakarobust", "sphincsf192shake256robust", "sphincsf192shake256simple",  "sphincsf192harakasimple"]
-
+# crypto_signs = ["dilithium3"]
+# crypto_signs2 = ["sphincsf192harakarobust", "sphincsf192shake256robust", "sphincsf192shake256simple",  "sphincsf192harakasimple"]
 
 # NIST Level 5
-#crypto_signs = ["dilithium5"]
-#crypto_signs2 = ["falcon1024tree", "falcon1024dyn", "sphincsf256harakarobust", "sphincsf256shake256robust", "sphincsf256shake256simple",  "sphincsf256harakasimple"]
+crypto_signs = ["dilithium5"]
+crypto_signs2 = ["falcon1024tree", "falcon1024dyn", "sphincsf256harakarobust", "sphincsf256shake256robust", "sphincsf256shake256simple",  "sphincsf256harakasimple"]
 
 
 
 # Generate substrings for filtering
 subs = [sign + KEYPAIR_CYCLES_SUBSTRING for sign in crypto_signs]
 subs2 = [sign + KEYPAIR_CYCLES_SUBSTRING2 for sign in crypto_signs2]
-## substrings_to_check = subs + sub2
 substrings_to_check = subs + subs2
 
 # Function to filter lines containing specific substrings
@@ -86,6 +88,9 @@ median_values = (
 # Rename the column
 median_values.columns = ["crypto_sign", "median_value"]
 
+print(median_values)
+
+'''
 # Plot histogram
 plt.figure(figsize=(8, 5))
 plt.bar(median_values["crypto_sign"], median_values["median_value"], color=["blue", "green", "red", "orange", "brown", "purple"])
@@ -99,3 +104,4 @@ plt.grid(axis="y", linestyle="--", alpha=0.7)
 
 # Show the plot
 plt.show()
+'''

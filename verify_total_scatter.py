@@ -9,18 +9,20 @@ import matplotlib.pyplot as plt
 # crypto_signs = ["sphincsf128shake256robust", "sphincsf128shake256simple", "sphincsf192shake256robust", "sphincsf192shake256simple", "sphincsf256shake256robust", "sphincsf256shake256simple"]
 
 # NIST Level 1
-# crypto_signs = ["falcon512tree", "falcon512dyn", "sphincsf128harakarobust", "sphincsf128shake256robust", "sphincsf128shake256simple",  "sphincsf128harakasimple"]
+#crypto_signs = [""]
+crypto_signs2 = ["falcon512tree", "falcon512dyn", "sphincsf128harakarobust", "sphincsf128shake256robust", "sphincsf128shake256simple",  "sphincsf128harakasimple"]
 
 # NIST Level 2
 # crypto_signs = ["dilithium2"]
+# crypto_signs2 = [""]
 
 # NIST Level 3
 # crypto_signs = ["dilithium3"]
 # crypto_signs2 = ["sphincsf192harakarobust", "sphincsf192shake256robust", "sphincsf192shake256simple",  "sphincsf192harakasimple"]
 
 # NIST Level 5
-crypto_signs = ["dilithium5"]
-crypto_signs2 = ["falcon1024tree", "falcon1024dyn", "sphincsf256harakarobust", "sphincsf256shake256robust", "sphincsf256shake256simple",  "sphincsf256harakasimple"]
+# crypto_signs = ["dilithium5"]
+# crypto_signs2 = ["falcon1024tree", "falcon1024dyn", "sphincsf256harakarobust", "sphincsf256shake256robust", "sphincsf256shake256simple",  "sphincsf256harakasimple"]
 
 
 byte_sizes = [
@@ -53,11 +55,11 @@ byte_sizes = [
 
 # Define substring to filter lines
 VERIFY_CYCLES_SUBSTRING = "/constbranchindex open_cycles "
-VERIFY_CYCLES_SUBSTRING2 = "/timingleaks cycles "
+VERIFY_CYCLES_SUBSTRING2 = "/timingleaks open_cycles "
 
 # Generate regex pattern to match {sign} + {SIGN_CYCLES_SUBSTRING} + {size}
-substrings_to_check = [f"{sign}{VERIFY_CYCLES_SUBSTRING}{size}" for sign in crypto_signs for size in byte_sizes]
-substrings_to_check += [f"{sign}{VERIFY_CYCLES_SUBSTRING2}{size}" for sign in crypto_signs2 for size in byte_sizes]
+# substrings_to_check = [f"{sign}{VERIFY_CYCLES_SUBSTRING}{size}" for sign in crypto_signs for size in byte_sizes]
+substrings_to_check = [f"{sign}{VERIFY_CYCLES_SUBSTRING2}{size}" for sign in crypto_signs2 for size in byte_sizes]
 
 # Function to filter lines containing specific substrings
 def filter_lines(input_file, substrings):
@@ -75,7 +77,7 @@ def extract_info(df):
         parts = line.split()
         
         # Find the crypto sign in the line
-        crypto_sign = next((crypto for crypto in (crypto_signs + crypto_signs2) if crypto in line), None)
+        crypto_sign = next((crypto for crypto in (crypto_signs2) if crypto in line), None)
         if not crypto_sign:
             return pd.Series([None, None, np.array([])])
 
@@ -138,6 +140,13 @@ df_filtered['numbers'] = df_filtered['numbers'].apply(remove_outliers)
 
 # Calculate the median value for all measurements
 df_medians = calc_medians(df_filtered)
+
+def summarize_medians(df):
+    summary_df = df.groupby('crypto_sign')['median'].median().reset_index()
+    summary_df.rename(columns={'median': 'overall_median'}, inplace=True)
+    return summary_df
+
+print(summarize_medians(df_medians))
 
 def plot_medians(df):
 
