@@ -9,8 +9,28 @@ KEYPAIR_CYCLES_SUBSTRING2 = "/timingleaks keypair_cycles"
 input_filename = 'data'  # SUPERCOP Data
 
 # Crypto categories
-crypto_signs = ["dilithium2", "dilithium3", "dilithium5", "ed25519"]
-crypto_signs2 = ["sphincs256", "falcon512dyn", "ronald512"]
+# crypto_signs = ["dilithium2", "dilithium3", "dilithium5"]
+# crypto_signs = ["falcon512tree", "falcon512dyn", "falcon1024tree", "falcon1024dyn"]
+# crypto_signs = ["sphincsf128harakarobust", "sphincsf192harakarobust", "sphincsf256harakarobust", "sphincsf128harakasimple", "sphincsf192harakasimple", "sphincsf256harakasimple"]
+# crypto_signs = ["sphincsf128shake256robust", "sphincsf128shake256simple", "sphincsf192shake256robust", "sphincsf192shake256simple", "sphincsf256shake256robust", "sphincsf256shake256simple"]
+
+# NIST Level 1
+# crypto_signs = [""]
+# crypto_signs2 = ["falcon512tree", "falcon512dyn", "sphincsf128harakarobust", "sphincsf128shake256robust", "sphincsf128shake256simple",  "sphincsf128harakasimple"]
+
+# NIST Level 2
+# crypto_signs = ["dilithium2"]
+# crypto_signs2 = [""]
+
+# NIST Level 3
+crypto_signs = ["dilithium3"]
+crypto_signs2 = ["sphincsf192harakarobust", "sphincsf192shake256robust", "sphincsf192shake256simple",  "sphincsf192harakasimple"]
+
+# NIST Level 5
+# crypto_signs = ["dilithium5"]
+# crypto_signs2 = ["falcon1024tree", "falcon1024dyn", "sphincsf256harakarobust", "sphincsf256shake256robust", "sphincsf256shake256simple",  "sphincsf256harakasimple"]
+
+
 
 # Generate substrings for filtering
 subs = [sign + KEYPAIR_CYCLES_SUBSTRING for sign in crypto_signs]
@@ -57,25 +77,31 @@ df = df.drop(columns=['line'])
 # Apply outlier removal to the "numbers" column
 df['numbers'] = df['numbers'].apply(remove_outliers)
 
-# Plot the data
-plt.figure(figsize=(10, 6))
+# Compute median values per crypto_sign
+median_values = (
+    df.explode("numbers")  # Flatten lists into rows
+    .groupby("crypto_sign")["numbers"]
+    .median()
+    .reset_index()
+)
 
-# Iterate over unique crypto_sign values
-for crypto in df["crypto_sign"].unique():
-    subset = df[df["crypto_sign"] == crypto]["numbers"].explode()
-    
-    if subset.dropna().empty:  # Avoid errors if subset is empty
-        continue
-    
-    subset = subset.dropna().astype(int).reset_index(drop=True)
-    plt.plot(subset.index, subset.values, marker='o', linestyle='-', label=crypto)
+# Rename the column
+median_values.columns = ["crypto_sign", "median_value"]
+
+print(median_values)
+
+'''
+# Plot histogram
+plt.figure(figsize=(8, 5))
+plt.bar(median_values["crypto_sign"], median_values["median_value"], color=["blue", "green", "red", "orange", "brown", "purple"])
 
 # Labels and title
-plt.xlabel("Measurement")
+plt.xlabel("Falcon Algorithm")
 plt.ylabel("Key Generation (CPU Cycles)")
-plt.title("Key Generation Performance (Outliers Removed)")
-plt.legend()
-plt.grid(True)
+plt.title("Median Key Generation Time of NIST Security Level 3")
+plt.xticks(rotation=20)
+plt.grid(axis="y", linestyle="--", alpha=0.7)
 
 # Show the plot
 plt.show()
+'''

@@ -9,34 +9,33 @@ import matplotlib.pyplot as plt
 # crypto_signs = ["sphincsf128shake256robust", "sphincsf128shake256simple", "sphincsf192shake256robust", "sphincsf192shake256simple", "sphincsf256shake256robust", "sphincsf256shake256simple"]
 
 # NIST Level 1
-#crypto_signs = [""]
-crypto_signs2 = ["falcon512tree", "falcon512dyn", "sphincsf128harakarobust", "sphincsf128shake256robust", "sphincsf128shake256simple",  "sphincsf128harakasimple"]
+# crypto_signs = [""]
+# crypto_signs2 = ["falcon512tree", "falcon512dyn", "sphincsf128harakarobust", "sphincsf128shake256robust", "sphincsf128shake256simple",  "sphincsf128harakasimple"]
 
 # NIST Level 2
 # crypto_signs = ["dilithium2"]
 # crypto_signs2 = [""]
 
 # NIST Level 3
-# crypto_signs = ["dilithium3"]
-# crypto_signs2 = ["sphincsf192harakarobust", "sphincsf192shake256robust", "sphincsf192shake256simple",  "sphincsf192harakasimple"]
+crypto_signs = ["dilithium3"]
+crypto_signs2 = ["sphincsf192harakarobust", "sphincsf192shake256robust", "sphincsf192shake256simple",  "sphincsf192harakasimple"]
 
 # NIST Level 5
 # crypto_signs = ["dilithium5"]
 # crypto_signs2 = ["falcon1024tree", "falcon1024dyn", "sphincsf256harakarobust", "sphincsf256shake256robust", "sphincsf256shake256simple",  "sphincsf256harakasimple"]
 
-
-byte_sizes = [
-567,
-    709, 887, 1109, 1387,
-    1734, 2232, 2711, 3389,
-    4237, 5297, 6622, 8278,
-    10348, 12936, 16171, 20214,
-    25268, 31650, 39483, 49354,
-    61693, 77117, 96397
-    ]
-
 # Byte sizes list
+byte_sizes = [
+    0, 1, 2, 3, 4,
+    6, 8, 11, 14,
+    18, 23, 29, 37,
+    47, 59, 74, 93,
+    117, 147, 184, 231,
+    289, 362, 453
+]
+
 '''
+# Byte sizes list
 byte_sizes = [
     0, 1, 2, 3, 4,
     6, 8, 11, 14,
@@ -54,12 +53,13 @@ byte_sizes = [
 '''
 
 # Define substring to filter lines
-VERIFY_CYCLES_SUBSTRING = "/constbranchindex open_cycles "
-VERIFY_CYCLES_SUBSTRING2 = "/timingleaks open_cycles "
+SIGN_CYCLES_SUBSTRING = "/constbranchindex cycles "
+SIGN_CYCLES_SUBSTRING2 = "/timingleaks cycles "
 
 # Generate regex pattern to match {sign} + {SIGN_CYCLES_SUBSTRING} + {size}
-# substrings_to_check = [f"{sign}{VERIFY_CYCLES_SUBSTRING}{size}" for sign in crypto_signs for size in byte_sizes]
-substrings_to_check = [f"{sign}{VERIFY_CYCLES_SUBSTRING2}{size}" for sign in crypto_signs2 for size in byte_sizes]
+substrings_to_check = [f"{sign}{SIGN_CYCLES_SUBSTRING}{size}" for sign in crypto_signs for size in byte_sizes]
+substrings_to_check += [f"{sign}{SIGN_CYCLES_SUBSTRING2}{size}" for sign in crypto_signs2 for size in byte_sizes]
+
 
 # Function to filter lines containing specific substrings
 def filter_lines(input_file, substrings):
@@ -70,6 +70,7 @@ def filter_lines(input_file, substrings):
 
     # Apply regex filter
     mask = df["line"].str.contains(pattern, na=False, regex=True)
+
     return df[mask]
 
 def extract_info(df):
@@ -77,7 +78,7 @@ def extract_info(df):
         parts = line.split()
         
         # Find the crypto sign in the line
-        crypto_sign = next((crypto for crypto in (crypto_signs2) if crypto in line), None)
+        crypto_sign = next((crypto for crypto in (crypto_signs + crypto_signs2) if crypto in line), None)
         if not crypto_sign:
             return pd.Series([None, None, np.array([])])
 
@@ -107,9 +108,6 @@ def extract_info(df):
 
     return df_grouped
 
-
-    return df_filtered
-
 # Function to remove outliers using the IQR method
 def remove_outliers(arr):
     arr = np.array(arr)  # Ensure input is a NumPy array
@@ -127,6 +125,7 @@ def calc_medians(df):
 
     # Select relevant columns for the output DataFrame
     return df[["crypto_sign", "byte_sizes", "median"]]
+
 
 # Read and filter lines from file
 input_filename = "data"
@@ -148,6 +147,7 @@ def summarize_medians(df):
 
 print(summarize_medians(df_medians))
 
+
 def plot_medians(df):
 
     # Create a figure and axis
@@ -160,8 +160,8 @@ def plot_medians(df):
 
     # Labels and title
     plt.xlabel("n-byte", fontsize=12)
-    plt.ylabel("Median Time to Verify n-byte Message (CPU Cycles)", fontsize=12)
-    plt.title("Median Verify Time vs. Message Size", fontsize=14)
+    plt.ylabel("Median Time to Sign n-byte Message (CPU Cycles)", fontsize=12)
+    plt.title("Median Signing Time vs. Message Size", fontsize=14)
     
     # Add legend
     plt.legend(title="Crypto Sign", fontsize=10)
@@ -169,4 +169,3 @@ def plot_medians(df):
     # Show plot
     plt.show()
 
-plot_medians(df_medians)
