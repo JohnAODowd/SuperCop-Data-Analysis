@@ -1,9 +1,7 @@
 # SuperCop Data Analysis
 This is a data analysis tool designed to be used with a SuperCop data file. 
 
-## Setup the Project
-
-### Creating the SuperCop data file
+## Creating the SuperCop data file
 
 Generate a SuperCop data file:
 
@@ -28,7 +26,7 @@ cp ./supercop-data/*/data ./data
 ```
 
 
-### Setting up the virtual environment
+## Setting up the virtual environment
 
 Activate the virtual environment:
 
@@ -42,7 +40,7 @@ Install the required packages:
 pip install -r requirements.txt
 ```
 
-### Performing the analysis
+## Performing the analysis
 
 ```sh
 python3 keygen.py
