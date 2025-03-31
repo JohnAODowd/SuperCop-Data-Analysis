@@ -28,10 +28,18 @@ cp ./supercop-data/*/data ./data
 
 ## Setting up the virtual environment
 
+
+Create a Python 3 virtual environment:
+
+```sh
+python -m venv project-venv
+
+```
+
 Activate the virtual environment:
 
 ```sh
-source env/bin/activate
+source project-venv/bin/activate
 ```
 
 Install the required packages:
