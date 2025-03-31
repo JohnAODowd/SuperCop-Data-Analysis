@@ -17,7 +17,7 @@ If interrupts (an incoming network packet, for example, or for an operating-syst
 Unzip the resulting data.gz file:
 
 ```sh
-gzip -d supercop-data/*/data.gz
+gzip -d supercop-data/*/data.gz > ../..
 ```
 
 Activate the virtual environment:
