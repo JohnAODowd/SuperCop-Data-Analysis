@@ -3,6 +3,8 @@ This is a data analysis tool designed to be used with a SuperCop data file.
 
 ## Setup the Project
 
+### Creating the SuperCop data file
+
 Generate a SuperCop data file:
 
 ```sh
@@ -17,8 +19,16 @@ If interrupts (an incoming network packet, for example, or for an operating-syst
 Unzip the resulting data.gz file:
 
 ```sh
-gzip -d supercop-data/*/data.gz > ../..
+gzip -d supercop-data/*/data.gz
 ```
+
+Copy the data file to the local directory:
+```sh
+cp ./supercop-data/*/data ./data
+```
+
+
+### Setting up the virtual environment
 
 Activate the virtual environment:
 
@@ -30,5 +40,11 @@ Install the required packages:
 
 ```sh
 pip install -r requirements.txt
+```
+
+### Performing the analysis
+
+```sh
+python3 keygen.py
 ```
 
