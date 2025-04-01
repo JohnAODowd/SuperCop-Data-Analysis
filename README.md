@@ -1,5 +1,5 @@
 # SuperCop Data Analysis
-This is a data analysis tool designed to be used with a SuperCop data file. 
+> A data analysis tool designed to be used with a SuperCop data file. 
 
 ## Creating the SuperCop data file
 
@@ -25,7 +25,7 @@ Copy the data file to the local directory:
 cp ./supercop-data/*/data ./data
 ```
 
-## If you are unable to generate a SuperCop data file...
+## If you are unable to generate a SuperCop data file...
 
 A sample data.gz file is available [here](https://drive.google.com/file/d/1Lqis7PBvsp7TPa8GCx_R695ExA-KtHCX/view?usp=drive_link).
 
