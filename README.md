@@ -67,13 +67,6 @@ python3 keygen.py nistlevel5 plot
 ```
 
 ```sh
-python3 keygen.py nistlevel1
-python3 keygen.py nistlevel2
-python3 keygen.py nistlevel3
-python3 keygen.py nistlevel5
-```
-
-```sh
 python3 sign_short.py nistlevel1 
 python3 sign_short.py nistlevel2 
 python3 sign_short.py nistlevel3 
