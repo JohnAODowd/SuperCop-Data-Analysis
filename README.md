@@ -5,7 +5,7 @@ Post-quantum cryptography aims to develop cryptographic algorithms that remain s
 
 The SuperCop benchmarking suite is widely used to evaluate the performance of these algorithms, providing key metrics such as speed (measured in CPU cycles), memory consumption, key sizes, ciphertext sizes, and operation times for various cryptographic tasks, including key generation, signing, and verification.
 
-This tool ingests raw data from the SuperCop output, parses relevant information, and organize it systematically to provide users with a detailed analysis of the performance of each algorithm. It categorises algorithms based on their NIST security level, allowing users to evaluate how algorithms of similar strength perform relative to one another.
+This tool ingests raw data from the SuperCop output, parses relevant information, and organises it systematically to provide users with a detailed analysis of the performance of each algorithm. It categorises algorithms based on their NIST security level, allowing users to evaluate how algorithms of similar strength perform relative to one another.
 
 Each file in this repository corresponds to a different operation type:
 - **keygen.py**: Time (CPU cycles) to generate a key pair: a secret key and a corresponding public key.
