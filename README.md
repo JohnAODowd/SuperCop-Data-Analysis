@@ -1,5 +1,5 @@
 # SuperCop Data Analysis
-> This tool analyzes performance metrics (such as speed and key generation speed) of cryptographic algorithms submitted to the NIST PQC standardization project, as recorded in SuperCop benchmarking data. 
+> This tool analyzes performance metrics (such as signing, verifying and key generation speed) of cryptographic algorithms submitted to the NIST PQC standardization project, as recorded in SuperCop benchmarking data. 
 
 Post-quantum cryptography aims to develop cryptographic algorithms that remain secure against attacks from powerful quantum computers. As part of this effort, the **National Institute of Standards and Technology (NIST)** has defined five distinct security levels (1-5) to categorise the robustness of these algorithms against both classical and quantum computational threats.
 
