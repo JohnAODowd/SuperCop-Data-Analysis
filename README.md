@@ -1,9 +1,11 @@
 # SuperCop Data Analysis
-> A data analysis tool designed for generating visualizations of a SuperCop data file.
+> This tool analyzes performance metrics (such as speed and key generation speed) of cryptographic algorithms submitted to the NIST PQC standardization project, as recorded in SuperCop benchmarking data. 
 
-This tool analyzes performance metrics (such as speed and key generation speed) of cryptographic algorithms submitted to the NIST PQC standardization project, as recorded in SuperCop benchmarking data. 
+Post-quantum cryptography aims to develop cryptographic algorithms that remain secure against attacks from powerful quantum computers. As part of this effort, the **National Institute of Standards and Technology (NIST)** has defined five distinct security levels (1-5) to categorise the robustness of these algorithms against both classical and quantum computational threats.
 
-Algorithms are grouped by by NIST security level.
+The SuperCop benchmarking suite is widely used to evaluate the performance of these algorithms, providing key metrics such as speed (measured in CPU cycles), memory consumption, key sizes, ciphertext sizes, and operation times for various cryptographic tasks, including key generation, signing, and verification.
+
+This tool ingests raw data from the SuperCop output, parses relevant information, and organize it systematically to provide users with a detailed analysis of the performance of each algorithm. It categorises algorithms based on their NIST security level, allowing users to evaluate how algorithms of similar strength perform relative to one another.
 
 Each file in this repository corresponds to a different operation type:
 - **keygen.py**: Time (CPU cycles) to generate a key pair: a secret key and a corresponding public key.
