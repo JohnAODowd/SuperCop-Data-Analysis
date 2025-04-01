@@ -1,28 +1,27 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
-# Crypto categories
-# crypto_signs = ["dilithium2", "dilithium3", "dilithium5"]
-# crypto_signs = ["falcon512tree", "falcon512dyn", "falcon1024tree", "falcon1024dyn"]
-# crypto_signs = ["sphincsf128harakarobust", "sphincsf192harakarobust", "sphincsf256harakarobust", "sphincsf128harakasimple", "sphincsf192harakasimple", "sphincsf256harakasimple"]
-# crypto_signs = ["sphincsf128shake256robust", "sphincsf128shake256simple", "sphincsf192shake256robust", "sphincsf192shake256simple", "sphincsf256shake256robust", "sphincsf256shake256simple"]
+if "nistlevel1" in sys.argv:
+    # NIST Level 1
+    crypto_signs = [""]
+    crypto_signs2 = ["falcon512tree", "falcon512dyn", "sphincsf128harakarobust", "sphincsf128shake256robust", "sphincsf128shake256simple",  "sphincsf128harakasimple"]
 
-# NIST Level 1
-# crypto_signs = [""]
-# crypto_signs2 = ["falcon512tree", "falcon512dyn", "sphincsf128harakarobust", "sphincsf128shake256robust", "sphincsf128shake256simple",  "sphincsf128harakasimple"]
+elif "nistlevel2" in sys.argv:
+    # NIST Level 2
+    crypto_signs = ["dilithium2"]
+    crypto_signs2 = [""]
 
-# NIST Level 2
-# crypto_signs = ["dilithium2"]
-# crypto_signs2 = [""]
+elif "nistlevel3" in sys.argv:
+    # NIST Level 3
+    crypto_signs = ["dilithium3"]
+    crypto_signs2 = ["sphincsf192harakarobust", "sphincsf192shake256robust", "sphincsf192shake256simple",  "sphincsf192harakasimple"]
 
-# NIST Level 3
-crypto_signs = ["dilithium3"]
-crypto_signs2 = ["sphincsf192harakarobust", "sphincsf192shake256robust", "sphincsf192shake256simple",  "sphincsf192harakasimple"]
-
-# NIST Level 5
-# crypto_signs = ["dilithium5"]
-# crypto_signs2 = ["falcon1024tree", "falcon1024dyn", "sphincsf256harakarobust", "sphincsf256shake256robust", "sphincsf256shake256simple",  "sphincsf256harakasimple"]
+elif "nistlevel5" in sys.argv:
+    # NIST Level 5
+    crypto_signs = ["dilithium5"]
+    crypto_signs2 = ["falcon1024tree", "falcon1024dyn", "sphincsf256harakarobust", "sphincsf256shake256robust", "sphincsf256shake256simple",  "sphincsf256harakasimple"]
 
 # Byte sizes list
 byte_sizes = [
@@ -78,9 +77,14 @@ def extract_info(df):
         parts = line.split()
         
         # Find the crypto sign in the line
-        crypto_sign = next((crypto for crypto in (crypto_signs + crypto_signs2) if crypto in line), None)
-        if not crypto_sign:
-            return pd.Series([None, None, np.array([])])
+        if crypto_signs == [""]:
+            crypto_sign = next((crypto for crypto in (crypto_signs2) if crypto in line), None)
+        
+        elif crypto_signs2 == [""]:
+            crypto_sign = next((crypto for crypto in (crypto_signs) if crypto in line), None)
+        
+        else:
+            crypto_sign = next((crypto for crypto in (crypto_signs + crypto_signs2) if crypto in line), None)
 
         # Locate the byte size (first match from byte_sizes)
         byte_size = None
@@ -126,7 +130,6 @@ def calc_medians(df):
     # Select relevant columns for the output DataFrame
     return df[["crypto_sign", "byte_sizes", "median"]]
 
-
 # Read and filter lines from file
 input_filename = "data"
 df_filtered = filter_lines(input_filename, substrings_to_check)
@@ -147,8 +150,8 @@ def summarize_medians(df):
 
 print(summarize_medians(df_medians))
 
-
-def plot_medians(df):
+if "plot" in sys.argv:
+    df = df_medians
 
     # Create a figure and axis
     plt.figure(figsize=(10, 6))
