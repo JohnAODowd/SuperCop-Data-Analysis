@@ -25,9 +25,11 @@ Copy the data file to the local directory:
 cp ./supercop-data/*/data ./data
 ```
 
+## If you are unable to generate a SuperCop data file...
+
+A sample data.gz file is available [here](https://drive.google.com/file/d/1Lqis7PBvsp7TPa8GCx_R695ExA-KtHCX/view?usp=drive_link).
 
 ## Setting up the virtual environment
-
 
 Create a Python 3 virtual environment:
 
@@ -48,9 +50,82 @@ Install the required packages:
 pip install -r requirements.txt
 ```
 
-## Performing the analysis
+## Usage
 
 ```sh
-python3 keygen.py
+python3 keygen.py nistlevel1
+python3 keygen.py nistlevel2
+python3 keygen.py nistlevel3
+python3 keygen.py nistlevel5
 ```
 
+```sh
+python3 keygen.py nistlevel1 plot
+python3 keygen.py nistlevel2 plot
+python3 keygen.py nistlevel3 plot
+python3 keygen.py nistlevel5 plot
+```
+
+```sh
+python3 keygen.py nistlevel1
+python3 keygen.py nistlevel2
+python3 keygen.py nistlevel3
+python3 keygen.py nistlevel5
+```
+
+```sh
+python3 sign_short.py nistlevel1 
+python3 sign_short.py nistlevel2 
+python3 sign_short.py nistlevel3 
+python3 sign_short.py nistlevel5
+```
+
+```sh
+python3 sign_short.py nistlevel1 plot
+python3 sign_short.py nistlevel2 plot
+python3 sign_short.py nistlevel3 plot
+python3 sign_short.py nistlevel5 plot
+```
+
+
+```sh
+python3 sign_long.py nistlevel1 
+python3 sign_long.py nistlevel2 
+python3 sign_long.py nistlevel3 
+python3 sign_long.py nistlevel5
+```
+
+```sh
+python3 sign_long.py nistlevel1 plot
+python3 sign_long.py nistlevel2 plot
+python3 sign_long.py nistlevel3 plot
+python3 sign_long.py nistlevel5 plot
+```
+
+```sh
+python3 verify_short.py nistlevel1 
+python3 verify_short.py nistlevel2 
+python3 verify_short.py nistlevel3 
+python3 verify_short.py nistlevel5 
+```
+
+```sh
+python3 verify_short.py nistlevel1 plot
+python3 verify_short.py nistlevel2 plot
+python3 verify_short.py nistlevel3 plot
+python3 verify_short.py nistlevel5 plot
+```
+
+```sh
+python3 verify_long.py nistlevel1 
+python3 verify_long.py nistlevel2 
+python3 verify_long.py nistlevel3 
+python3 verify_long.py nistlevel5 
+```
+
+```sh
+python3 verify_long.py nistlevel1 plot
+python3 verify_long.py nistlevel2 plot
+python3 verify_long.py nistlevel3 plot
+python3 verify_long.py nistlevel5 plot
+```
