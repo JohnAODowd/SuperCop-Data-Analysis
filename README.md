@@ -48,7 +48,7 @@ cp ./supercop-data/*/data ./data
 Create a Python 3 virtual environment:
 
 ```sh
-python -m venv project-venv
+python3 -m venv project-venv
 
 ```
 
