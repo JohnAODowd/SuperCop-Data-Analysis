@@ -1,7 +1,13 @@
 # SuperCop Data Analysis
 > This tool analyzes performance metrics (such as signing, verifying and key generation speed) of cryptographic algorithms submitted to the NIST PQC standardization project, as recorded in SuperCop benchmarking data. 
 
-Post-quantum cryptography aims to develop cryptographic algorithms that remain secure against attacks from powerful quantum computers. As part of this effort, the **National Institute of Standards and Technology (NIST)** has defined five distinct security levels (1-5) to categorise the robustness of these algorithms against both classical and quantum computational threats.
+Post-quantum cryptography aims to develop cryptographic algorithms that remain secure against attacks from a cryptographically relevant quantum computer. As part of this effort, the **National Institute of Standards and Technology (NIST)** has defined five distinct security levels (1-5) to categorise the robustness of these algorithms against both classical and quantum computational threats.
+
+- Level 1: Security equivalent to breaking AES-128 or SHA-256 using classical algorithms.
+- Level 2: Provides a slightly higher security level, comparable to breaking SHA-384.
+- Level 3: Equivalent to breaking AES-192, offering stronger protection.
+- Level 4: Equivalent to breaking AES-256 or SHA-512.
+- Level 5: Security above that of AES-256.
 
 The SuperCop benchmarking suite is widely used to evaluate the performance of these algorithms, providing key metrics such as speed (measured in CPU cycles), memory consumption, key sizes, ciphertext sizes, and operation times for various cryptographic tasks, including key generation, signing, and verification.
 
