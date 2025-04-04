@@ -21,7 +21,7 @@ Each file in this repository corresponds to a different operation type:
 - **verify_short.py**: Time to open a signed short message (1 - 453 bytes).
 - **verify_long.py**: Time to open a signed long message (567 - 96397 bytes).
 
-These tools are created with Python using libraries like [pandas](https://pandas.pydata.org/) for data handling and [NumPy](https://numpy.org/) for numerical analysis.
+This tool was created with Python using libraries like [pandas](https://pandas.pydata.org/) for data handling and [NumPy](https://numpy.org/) for numerical analysis.
 
 ## Creating the SuperCop data file
 
